@@ -40,3 +40,78 @@ static pnodo rotacionDerecha(pnodo t)
     t->balance = max(x+2+max(y, 0), y+1); //nB
     return t;
 
+}
+
+void salir(){
+    printf("Programa finalizado");
+}
+
+
+
+void menu(){
+
+    int opcion;
+    pnodo t=NULL;
+    int valor;
+
+
+    do{
+        printf("*****Menu*****\n");
+
+        printf("Elige una opcion\n");
+
+        printf("1. Cargar valor \n");
+        printf("2. Listar in order\n");
+        printf("3. Listar pos order \n");
+        printf("4. Listar Pre order \n");
+        printf("5. Borrar Nodo \n");
+        printf("6. Buscar Nodo \n");
+        printf("7. Salir \n");
+
+        printf("SELECCIONA LA OPCION \n");
+        scanf("%d", &opcion);
+
+        switch(opcion)
+        {
+
+            case 1:
+                printf("ingresar un valor \n");
+                scanf("%d", &valor);
+                break;
+
+            case 2:
+                break;
+
+            case 3:
+                break;
+
+            case 4:
+                break;
+
+            case 5:
+                break;
+            
+            case 6:
+                break;
+
+            case 7:
+                salir();
+                break;
+
+
+        }
+
+    }while (opcion != 7);
+
+
+}
+
+
+int main() {
+    menu();
+    return 0;
+
+}
+    
+    
+    
