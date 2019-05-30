@@ -63,9 +63,9 @@ pnodo CreaNodo(int key)//crea un nodo sin hijos
     pnodo nodo;
     nodo = (pnodo) malloc(sizeof(nodo));
     nodo->clave=key;
-    nodo->izquierdo=0;
-    nodo->derecho=0;
-    return t;
+    nodo->izquierdo=NULL;
+    nodo->derecho=NULL;
+    return nodo;
 }
 
 pnodo insertR(pnodo nodo)
@@ -197,6 +197,6 @@ int main() {
     return 0;
 
 }
-    
-    
-    
+
+
+
