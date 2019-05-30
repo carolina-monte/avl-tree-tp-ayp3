@@ -47,6 +47,27 @@ static pnodo rotacionDerecha(pnodo t)
 
 }
 
+static void Error(int tipo)
+{
+    if (tipo) printf("\nError en inserci?n\n");
+    else printf("\nError en descarte\n");
+}
+
+int Altura(void) //te da la altura actual del arboi
+{
+    return alto_avl;
+}
+
+pnodo CreaNodo(int key)//crea un nodo sin hijos
+{
+    pnodo nodo;
+    nodo = (pnodo) malloc(sizeof(nodo));
+    nodo->clave=key;
+    nodo->izquierdo=0;
+    nodo->derecho=0;
+    return t;
+}
+
 void salir(){
     printf("Programa finalizado");
 }
