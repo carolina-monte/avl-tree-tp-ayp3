@@ -11,6 +11,11 @@ typedef struct avlnode
 # define max(A,B) ((A)>(B)?(A):(B)) /* Definimos la funcion mayor o menor*/
 # define min(A,B) ((A)>(B)?(B):(A))
 
+int flag;
+//flag = 1 indica que debe seguir el ascenso rebalanceando.
+int key;
+int alto_avl = 0;
+
 static pnodo rotacionIzquierda(pnodo t)
 {
     pnodo temp;
