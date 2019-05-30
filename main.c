@@ -16,34 +16,34 @@ int flag;
 int key;
 int alto_avl = 0;
 
-static pnodo rotacionIzquierda(pnodo t)
+static pnodo rotacionIzquierda(pnodo nodo)
 {
     pnodo temp;
     int x,y;
-    temp = t;
-    t = t->derecho;
-    temp->derecho = t->izquierdo;
-    t->izquierdo = temp;
+    temp = nodo;
+    nodo = nodo->derecho;
+    temp->derecho = nodo->izquierdo;
+    nodo->izquierdo = temp;
     //Recalcula factores de balance de los dos nodos
     x = temp->balance; // oldbal(A)
-    y = t->balance; // oldbalance(B)
+    y = nodo->balance; // oldbalance(B)
     temp->balance = x-1-max(y, 0); // nA
-    t->balance = min(x-2+min(y, 0), y-1); // nB
-    return t;
+    nodo->balance = min(x-2+min(y, 0), y-1); // nB
+    return nodo;
 }
 
-static pnodo rotacionDerecha(pnodo t)
+static pnodo rotacionDerecha(pnodo nodo)
 {
-    pnodo temp = t;
+    pnodo temp = nodo;
     int x,y;
-    t = t->izquierdo;
-    temp->izquierdo = t->derecho;
-    t->derecho = temp;
+    nodo = nodo->izquierdo;
+    temp->izquierdo = nodo->derecho;
+    nodo->derecho = temp;
     x = temp->balance; // oldbal(A)
-    y = t->balance;    // oldbal(B)
+    y = nodo->balance;    // oldbal(B)
     temp->balance = x+1-min(y, 0);  // nA
-    t->balance = max(x+2+max(y, 0), y+1); //nB
-    return t;
+    nodo->balance = max(x+2+max(y, 0), y+1); //nB
+    return nodo;
 
 }
 
@@ -70,7 +70,7 @@ pnodo CreaNodo(int key)//crea un nodo sin hijos
 
 pnodo insertR(pnodo nodo)
 {
-    if (nodo == NULL)  /* Llego a un punto de insercion */
+    if (nodo == NULL)  /* Llegó a un punto de inserción */
     {
         nodo = CreaNodo(key);
         nodo->balance = 0; /* Los dos hijos son nulos */
@@ -81,7 +81,7 @@ pnodo insertR(pnodo nodo)
     {
         //desciende por la derecha
         nodo->derecho = insertR(nodo->derecho);
-        //se pasa por la siguiente linea en la revision ascendente
+        //se pasa por la siguiente línea en la revisión ascendente
         nodo->balance += flag; /* Incrementa factor de balance cuando sumo uno a la derecha sumo 1 al balance*/
     }
     else if (nodo->clave > key)
@@ -91,7 +91,7 @@ pnodo insertR(pnodo nodo)
         //se corrige en el ascenso
         nodo->balance -= flag; /* Decrementa balance a la izquierda resto 1 si es 0 el total esta balanceado*/
     }
-    else   /* (nodo->k == key) Ya estaba en el arbol */
+    else   /* (t->k == key) Ya estaba en el árbol */
     {
         Error(1);
         flag = 0;
@@ -100,32 +100,34 @@ pnodo insertR(pnodo nodo)
     if (flag == 0) /* No hay que rebalancear. Sigue el ascenso */
         return nodo;
 
-    /*El codigo a continuacion es el costo adicional para mantener propiedad AVL */
-    /* Mantiene arbol balanceado avl. Solo una o dos rotaciones por insercion */
+    /*El código a continuación es el costo adicional para mantener propiedad AVL */
+    /* Mantiene árbol balanceado avl. Sólo una o dos rotaciones por inserción */
     if (nodo->balance < -1)
     {
-        /* Quedo desbalanceado por la izquierda. Espejos Casos c y d.*/
+        /* Quedó desbalanceado por la izquierda. Espejos Casos c y d.*/
         if (nodo->izquierdo->balance > 0)
-            /* Si hijo izquierdo esta cargado a la derecha */
+            /* Si hijo izquierdo está cargado a la derecha */
             nodo->izquierdo = rotacionIzquierda(nodo->izquierdo);
         nodo = rotacionDerecha(nodo);
-        flag = 0; /* El subarbol no aumenta su altura */
+        flag = 0; /* El subárbol no aumenta su altura */
     }
     else if (nodo->balance > 1)
     {
-        /* Si quedo desbalanceado por la derecha: Casos c y d.*/
+        /* Si quedó desbalanceado por la derecha: Casos c y d.*/
         if (nodo->derecho->balance < 0)
-            /* Si hijo derecho esta cargado a la izquierda Caso d.*/
+            /* Si hijo derecho está cargado a la izquierda Caso d.*/
             nodo->derecho = rotacionDerecha(nodo->derecho);
         nodo = rotacionIzquierda(nodo); /* Caso c.*/
-        flag = 0; /* El subarbol no aumenta su altura */
+        flag = 0; /* El subárbol no aumenta su altura */
     }
-    else if (nodo->balance == 0)/* La insercion lo balanceo */
-        flag = 0; /* El subarbol no aumenta su altura. Caso a*/
-    else /* Quedo desbalanceado con -1 ? +1 Caso b */
+    else if (nodo->balance == 0)/* La inserción lo balanceo */
+        flag = 0; /* El subárbol no aumenta su altura. Caso a*/
+    else /* Quedó desbalanceado con -1 ó +1 Caso b */
         flag = 1; /* Propaga ascendentemente la necesidad de rebalancear */
     return nodo;
+}
 
+/* Mantiene variable global con el alto del árbol. */
 
 void salir(){
     printf("Programa finalizado");
