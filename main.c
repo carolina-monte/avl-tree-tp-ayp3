@@ -49,7 +49,7 @@ static pnodo rotacionDerecha(pnodo t)
 
 static void Error(int tipo)
 {
-    if (tipo) printf("\nError en inserci?n\n");
+    if (tipo) printf("\nError en insercion\n");
     else printf("\nError en descarte\n");
 }
 
@@ -70,7 +70,7 @@ pnodo CreaNodo(int key)//crea un nodo sin hijos
 
 pnodo insertR(pnodo nodo)
 {
-    if (nodo == NULL)  /* Lleg? a un punto de inserci?n */
+    if (nodo == NULL)  /* Llego a un punto de insercion */
     {
         nodo = CreaNodo(key);
         nodo->balance = 0; /* Los dos hijos son nulos */
@@ -81,7 +81,7 @@ pnodo insertR(pnodo nodo)
     {
         //desciende por la derecha
         nodo->derecho = insertR(nodo->derecho);
-        //se pasa por la siguiente l?nea en la revisi?n ascendente
+        //se pasa por la siguiente linea en la revision ascendente
         nodo->balance += flag; /* Incrementa factor de balance cuando sumo uno a la derecha sumo 1 al balance*/
     }
     else if (nodo->clave > key)
@@ -91,7 +91,7 @@ pnodo insertR(pnodo nodo)
         //se corrige en el ascenso
         nodo->balance -= flag; /* Decrementa balance a la izquierda resto 1 si es 0 el total esta balanceado*/
     }
-    else   /* (nodo->k == key) Ya estaba en el ?rbol */
+    else   /* (nodo->k == key) Ya estaba en el arbol */
     {
         Error(1);
         flag = 0;
@@ -100,29 +100,29 @@ pnodo insertR(pnodo nodo)
     if (flag == 0) /* No hay que rebalancear. Sigue el ascenso */
         return nodo;
 
-    /*El c?digo a continuaci?n es el costo adicional para mantener propiedad AVL */
-    /* Mantiene ?rbol balanceado avl. S?lo una o dos rotaciones por inserci?n */
+    /*El codigo a continuacion es el costo adicional para mantener propiedad AVL */
+    /* Mantiene arbol balanceado avl. Solo una o dos rotaciones por insercion */
     if (nodo->balance < -1)
     {
-        /* Qued? desbalanceado por la izquierda. Espejos Casos c y d.*/
+        /* Quedo desbalanceado por la izquierda. Espejos Casos c y d.*/
         if (nodo->izquierdo->balance > 0)
-            /* Si hijo izquierdo est? cargado a la derecha */
+            /* Si hijo izquierdo esta cargado a la derecha */
             nodo->izquierdo = rotacionIzquierda(nodo->izquierdo);
         nodo = rotacionDerecha(nodo);
-        flag = 0; /* El sub?rbol no aumenta su altura */
+        flag = 0; /* El subarbol no aumenta su altura */
     }
     else if (nodo->balance > 1)
     {
-        /* Si qued? desbalanceado por la derecha: Casos c y d.*/
+        /* Si quedo desbalanceado por la derecha: Casos c y d.*/
         if (nodo->derecho->balance < 0)
-            /* Si hijo derecho est? cargado a la izquierda Caso d.*/
+            /* Si hijo derecho esta cargado a la izquierda Caso d.*/
             nodo->derecho = rotacionDerecha(nodo->derecho);
         nodo = rotacionIzquierda(nodo); /* Caso c.*/
-        flag = 0; /* El sub?rbol no aumenta su altura */
+        flag = 0; /* El subarbol no aumenta su altura */
     }
-    else if (nodo->balance == 0)/* La inserci?n lo balanceo */
-        flag = 0; /* El sub?rbol no aumenta su altura. Caso a*/
-    else /* Qued? desbalanceado con -1 ? +1 Caso b */
+    else if (nodo->balance == 0)/* La insercion lo balanceo */
+        flag = 0; /* El subarbol no aumenta su altura. Caso a*/
+    else /* Quedo desbalanceado con -1 ? +1 Caso b */
         flag = 1; /* Propaga ascendentemente la necesidad de rebalancear */
     return nodo;
 
