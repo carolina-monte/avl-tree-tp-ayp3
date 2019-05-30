@@ -68,6 +68,65 @@ pnodo CreaNodo(int key)//crea un nodo sin hijos
     return t;
 }
 
+pnodo insertR(pnodo nodo)
+{
+    if (nodo == NULL)  /* Lleg? a un punto de inserci?n */
+    {
+        nodo = CreaNodo(key);
+        nodo->balance = 0; /* Los dos hijos son nulos */
+        flag = 1; /* Marca necesidad de revisar balances */
+        return nodo; /* retorna puntero al insertado */
+    }
+    else if (nodo->clave < key)
+    {
+        //desciende por la derecha
+        nodo->derecho = insertR(nodo->derecho);
+        //se pasa por la siguiente l?nea en la revisi?n ascendente
+        nodo->balance += flag; /* Incrementa factor de balance cuando sumo uno a la derecha sumo 1 al balance*/
+    }
+    else if (nodo->clave > key)
+    {
+        //desciende por la izquierda
+        nodo->izquierdo = insertR(nodo->izquierdo);
+        //se corrige en el ascenso
+        nodo->balance -= flag; /* Decrementa balance a la izquierda resto 1 si es 0 el total esta balanceado*/
+    }
+    else   /* (nodo->k == key) Ya estaba en el ?rbol */
+    {
+        Error(1);
+        flag = 0;
+    }
+
+    if (flag == 0) /* No hay que rebalancear. Sigue el ascenso */
+        return nodo;
+
+    /*El c?digo a continuaci?n es el costo adicional para mantener propiedad AVL */
+    /* Mantiene ?rbol balanceado avl. S?lo una o dos rotaciones por inserci?n */
+    if (nodo->balance < -1)
+    {
+        /* Qued? desbalanceado por la izquierda. Espejos Casos c y d.*/
+        if (nodo->izquierdo->balance > 0)
+            /* Si hijo izquierdo est? cargado a la derecha */
+            nodo->izquierdo = rotacionIzquierda(nodo->izquierdo);
+        nodo = rotacionDerecha(nodo);
+        flag = 0; /* El sub?rbol no aumenta su altura */
+    }
+    else if (nodo->balance > 1)
+    {
+        /* Si qued? desbalanceado por la derecha: Casos c y d.*/
+        if (nodo->derecho->balance < 0)
+            /* Si hijo derecho est? cargado a la izquierda Caso d.*/
+            nodo->derecho = rotacionDerecha(nodo->derecho);
+        nodo = rotacionIzquierda(nodo); /* Caso c.*/
+        flag = 0; /* El sub?rbol no aumenta su altura */
+    }
+    else if (nodo->balance == 0)/* La inserci?n lo balanceo */
+        flag = 0; /* El sub?rbol no aumenta su altura. Caso a*/
+    else /* Qued? desbalanceado con -1 ? +1 Caso b */
+        flag = 1; /* Propaga ascendentemente la necesidad de rebalancear */
+    return nodo;
+
+
 void salir(){
     printf("Programa finalizado");
 }
@@ -116,7 +175,7 @@ void menu(){
 
             case 5:
                 break;
-            
+
             case 6:
                 break;
 
