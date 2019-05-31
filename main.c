@@ -142,6 +142,16 @@ pnodo insertR(pnodo nodo)
 
 /* Mantiene variable global con el alto del árbol. */
 
+pnodo InsertarAVL(int clave, pnodo nodo)
+{
+    key = clave; //pasa argumento a global.
+    nodo = insertR(nodo);
+    if (flag == 1)
+        alto_avl++;
+    //si la propagación llega hasta la raíz, aumenta la altura.
+    return nodo;
+}
+
 void salir(){
     printf("Programa finalizado");
 }
