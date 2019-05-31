@@ -139,7 +139,6 @@ pnodo insertR(pnodo nodo)
         flag = 1; /* Propaga ascendentemente la necesidad de rebalancear */
     return nodo;
 }
-
 /* Mantiene variable global con el alto del árbol. */
 
 pnodo InsertarAVL(int clave, pnodo nodo)
@@ -289,13 +288,13 @@ void salir(){
     printf("Programa finalizado");
 }
 
-void inorder(pnodo t, int profundidad)
+void inorder(pnodo nodo, int profundidad)
 {
-    if (t != NULL)
+    if (nodo != NULL)
     {
-        inorder(t->izquierdo, profundidad+1);
-        printf ("v= %d p=%d bal=%d \n", t->clave, profundidad, t->balance);
-        inorder(t->derecho, profundidad+1);
+        inorder(nodo->izquierdo, profundidad+1);
+        printf ("v= %d p=%d bal=%d \n", nodo->clave, profundidad, nodo->balance);
+        inorder(nodo->derecho, profundidad+1);
     }
 }
 
@@ -312,12 +311,12 @@ void postorder(pnodo t, int profundidad)
 
 void preorder(pnodo t, int profundidad)
 {
-if (t != NULL)
-{
-printf ("v= %d p=%d bal=%d \n", t->clave, profundidad, t->balance);
-preorder(t->izquierdo, profundidad+1);
-preorder(t->derecho, profundidad+1);
-}
+    if (t != NULL)
+    {
+        printf ("v= %d p=%d bal=%d \n", t->clave, profundidad, t->balance);
+        preorder(t->izquierdo, profundidad+1);
+        preorder(t->derecho, profundidad+1);
+    }
 }
 void pasosPredeterminados()
 {
