@@ -11,10 +11,10 @@ typedef struct avlnode
 # define max(A,B) ((A)>(B)?(A):(B)) /* Definimos la funcion mayor o menor*/
 # define min(A,B) ((A)>(B)?(B):(A))
 
-int flag;
+int flag; /*registrar cambios de altura. En rebalance ascendente */
 //flag = 1 indica que debe seguir el ascenso rebalanceando.
-int key;
-int alto_avl = 0;
+int key; /* Variable global, para disminuir argumentos */
+int alto_avl = 0; /* Altura árbol avl. Número de nodos desde la raíz a las hojas.*/
 
 /* Rotación Izquierda (A) *
 *  A               B
@@ -44,7 +44,15 @@ static pnodo rotacionIzquierda(pnodo nodo)
     nodo->balance = min(x-2+min(y, 0), y-1); // nB
     return nodo;
 }
-
+/* Rotación derecha
+*
+*   A         B
+*  / \       / \
+*  B  c ==> a   A
+* / \          / \
+* a  b        b   c
+*
+*/
 static pnodo rotacionDerecha(pnodo nodo)
 {
     pnodo temp = nodo;
