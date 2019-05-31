@@ -265,12 +265,12 @@ pnodo deleteR( pnodo nodo)
         flag = 0; /* No debe seguir rebalanceando. Caso a.*/
     return nodo;
 }
-pnodo DescartarAVL(int clave, pnodo t)
+pnodo DescartarAVL(int clave, pnodo nodo)
 {
     key = clave;
-    t = deleteR(t);
+    nodo = deleteR(nodo);
     if (flag == 1) alto_avl--;
-    return t;
+    return nodo;
 }
 
 pnodo busqueda(pnodo nodo)
@@ -307,23 +307,23 @@ void inorder(pnodo nodo, int profundidad)
 }
 
 
-void postorder(pnodo t, int profundidad)
+void postorder(pnodo nodo, int profundidad)
 {
-    if (t != NULL)
+    if (nodo != NULL)
     {
-        postorder(t->izquierdo, profundidad+1);
-        postorder(t->derecho, profundidad+1);
-        printf ("v= %d p=%d bal=%d \n", t->clave, profundidad, t->balance);
+        postorder(nodo->izquierdo, profundidad+1);
+        postorder(nodo->derecho, profundidad+1);
+        printf ("v= %d p=%d bal=%d \n", nodo->clave, profundidad, nodo->balance);
     }
 }
 
-void preorder(pnodo t, int profundidad)
+void preorder(pnodo nodo, int profundidad)
 {
-    if (t != NULL)
+    if (nodo != NULL)
     {
-        printf ("v= %d p=%d bal=%d \n", t->clave, profundidad, t->balance);
-        preorder(t->izquierdo, profundidad+1);
-        preorder(t->derecho, profundidad+1);
+        printf ("v= %d p=%d bal=%d \n", nodo->clave, profundidad, nodo->balance);
+        preorder(nodo->izquierdo, profundidad+1);
+        preorder(nodo->derecho, profundidad+1);
     }
 }
 void pasosPredeterminados()
@@ -426,7 +426,7 @@ void pasosPredeterminados()
 void menu(){
 
     int opcion;
-    pnodo t=NULL;
+    pnodo nodo=NULL;
     int valor;
 
 
@@ -453,32 +453,32 @@ void menu(){
             case 1:
                 printf("ingresar un valor \n");
                 scanf("%d", &valor);
-                t=InsertarAVL(valor , t);
+                nodo=InsertarAVL(valor , nodo);
                 break;
 
             case 2:
-                inorder(t,0);
+                inorder(nodo,0);
                 break;
 
             case 3:
-                postorder(t,0);
+                postorder(nodo,0);
                 break;
 
             case 4:
-                preorder(t,0);
+                preorder(nodo,0);
                 break;
 
             case 5:
                 printf("ingresar valor a borra \n");
                 scanf("%d", &valor);
-                t=DescartarAVL(valor , t);
+                nodo=DescartarAVL(valor , nodo);
 
                 break;
 
             case 6:
                 printf("ingresar valor a buscar \n");
                 scanf("%d", &valor);
-                t=BuscarAVL(valor , t);
+                nodo=BuscarAVL(valor , nodo);
                 break;
             case 7:
                 pasosPredeterminados();
