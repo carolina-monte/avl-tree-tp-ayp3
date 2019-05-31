@@ -16,7 +16,7 @@ int flag;
 int key;
 int alto_avl = 0;
 
-/* Rotación Izquierda (A) *
+/* RotaciÃ³n Izquierda (A) *
 *  A               B
 * / \             / \
 * a  B ==>       A   c
@@ -24,8 +24,8 @@ int alto_avl = 0;
 *   b  c       a  b d  e
       / \
      d   e
-* Sólo cambian los factores de balance de los nodos A y B
-* Los factores de balance de los sub-árboles no cambian. */
+* SÃ³lo cambian los factores de balance de los nodos A y B
+* Los factores de balance de los sub-Ã¡rboles no cambian. */
 
 
 
@@ -83,7 +83,7 @@ pnodo CreaNodo(int key)//crea un nodo sin hijos
 
 pnodo insertR(pnodo nodo)
 {
-    if (nodo == NULL)  /* Llegó a un punto de inserción */
+    if (nodo == NULL)  /* LlegÃ³ a un punto de inserciÃ³n */
     {
         nodo = CreaNodo(key);
         nodo->balance = 0; /* Los dos hijos son nulos */
@@ -94,7 +94,7 @@ pnodo insertR(pnodo nodo)
     {
         //desciende por la derecha
         nodo->derecho = insertR(nodo->derecho);
-        //se pasa por la siguiente línea en la revisión ascendente
+        //se pasa por la siguiente lÃ­nea en la revisiÃ³n ascendente
         nodo->balance += flag; /* Incrementa factor de balance cuando sumo uno a la derecha sumo 1 al balance*/
     }
     else if (nodo->clave > key)
@@ -104,7 +104,7 @@ pnodo insertR(pnodo nodo)
         //se corrige en el ascenso
         nodo->balance -= flag; /* Decrementa balance a la izquierda resto 1 si es 0 el total esta balanceado*/
     }
-    else   /* (t->k == key) Ya estaba en el árbol */
+    else   /* (t->k == key) Ya estaba en el Ã¡rbol */
     {
         Error(1);
         flag = 0;
@@ -113,34 +113,34 @@ pnodo insertR(pnodo nodo)
     if (flag == 0) /* No hay que rebalancear. Sigue el ascenso */
         return nodo;
 
-    /*El código a continuación es el costo adicional para mantener propiedad AVL */
-    /* Mantiene árbol balanceado avl. Sólo una o dos rotaciones por inserción */
+    /*El cÃ³digo a continuaciÃ³n es el costo adicional para mantener propiedad AVL */
+    /* Mantiene Ã¡rbol balanceado avl. SÃ³lo una o dos rotaciones por inserciÃ³n */
     if (nodo->balance < -1)
     {
-        /* Quedó desbalanceado por la izquierda. Espejos Casos c y d.*/
+        /* QuedÃ³ desbalanceado por la izquierda. Espejos Casos c y d.*/
         if (nodo->izquierdo->balance > 0)
-            /* Si hijo izquierdo está cargado a la derecha */
+            /* Si hijo izquierdo estÃ¡ cargado a la derecha */
             nodo->izquierdo = rotacionIzquierda(nodo->izquierdo);
         nodo = rotacionDerecha(nodo);
-        flag = 0; /* El subárbol no aumenta su altura */
+        flag = 0; /* El subÃ¡rbol no aumenta su altura */
     }
     else if (nodo->balance > 1)
     {
-        /* Si quedó desbalanceado por la derecha: Casos c y d.*/
+        /* Si quedÃ³ desbalanceado por la derecha: Casos c y d.*/
         if (nodo->derecho->balance < 0)
-            /* Si hijo derecho está cargado a la izquierda Caso d.*/
+            /* Si hijo derecho estÃ¡ cargado a la izquierda Caso d.*/
             nodo->derecho = rotacionDerecha(nodo->derecho);
         nodo = rotacionIzquierda(nodo); /* Caso c.*/
-        flag = 0; /* El subárbol no aumenta su altura */
+        flag = 0; /* El subÃ¡rbol no aumenta su altura */
     }
-    else if (nodo->balance == 0)/* La inserción lo balanceo */
-        flag = 0; /* El subárbol no aumenta su altura. Caso a*/
-    else /* Quedó desbalanceado con -1 ó +1 Caso b */
+    else if (nodo->balance == 0)/* La inserciÃ³n lo balanceo */
+        flag = 0; /* El subÃ¡rbol no aumenta su altura. Caso a*/
+    else /* QuedÃ³ desbalanceado con -1 Ã³ +1 Caso b */
         flag = 1; /* Propaga ascendentemente la necesidad de rebalancear */
     return nodo;
 }
 
-/* Mantiene variable global con el alto del árbol. */
+/* Mantiene variable global con el alto del Ã¡rbol. */
 
 pnodo InsertarAVL(int clave, pnodo nodo)
 {
@@ -148,14 +148,14 @@ pnodo InsertarAVL(int clave, pnodo nodo)
     nodo = insertR(nodo);
     if (flag == 1)
         alto_avl++;
-    //si la propagación llega hasta la raíz, aumenta la altura.
+    //si la propagaciÃ³n llega hasta la raÃ­z, aumenta la altura.
     return nodo;
 }
 
 pnodo deleteR( pnodo nodo)
 {
     pnodo p;
-    if (nodo == NULL)  /* No encontró nodo a descartar */
+    if (nodo == NULL)  /* No encontrÃ³ nodo a descartar */
     {
         Error(0);
         flag = 0;
@@ -164,20 +164,20 @@ pnodo deleteR( pnodo nodo)
     {
         //Comienza el descenso por la derecha
         nodo->derecho = deleteR(nodo->derecho);
-        //aquí se llega en el retorno ascendente.
-        nodo->balance -= flag; /* Se descartó por la derecha. Disminuye factor */
-        //Se retorna después de la revisión de los factores
+        //aquÃ­ se llega en el retorno ascendente.
+        nodo->balance -= flag; /* Se descartÃ³ por la derecha. Disminuye factor */
+        //Se retorna despuÃ©s de la revisiÃ³n de los factores
     }
     else if (nodo->clave > key)
     {
         //Desciende por la izquierda
         nodo->izquierdo = deleteR(nodo->izquierdo);
-        //o se llega por esta vía si se descartó por la izquierda.
-        nodo->balance += flag; /* se descartó por la izq. Aumenta factor de balance */
+        //o se llega por esta vÃ­a si se descartÃ³ por la izquierda.
+        nodo->balance += flag; /* se descartÃ³ por la izq. Aumenta factor de balance */
     }
     else   /* (t->clave == key) */
     {
-        /* Encontró el nodo a descartar */
+        /* EncontrÃ³ el nodo a descartar */
         if (nodo->izquierdo == NULL)   /*Si hay hijo derecho debe ser hoja, por ser AVL */
         {
             p = nodo;
@@ -219,16 +219,16 @@ pnodo deleteR( pnodo nodo)
         }
     }
 
-    /* Mantiene árbol balanceado avl. Sólo una o dos rotaciones por descarte */
+    /* Mantiene Ã¡rbol balanceado avl. SÃ³lo una o dos rotaciones por descarte */
     if (flag == 0 ) /* No hay que rebalancear. Sigue el ascenso, sin rebalancear */
         return nodo;
 
     /* Hay que revisar factores de balance en el ascenso*/
-    if (nodo->balance < -1)  /* Si quedó desbalanceado por la izquierda y dejó de ser AVL */
+    if (nodo->balance < -1)  /* Si quedÃ³ desbalanceado por la izquierda y dejÃ³ de ser AVL */
     {
         if (nodo->izquierdo->balance > 0)  /*espejos casos c, d y e */
         {
-            /* Si el hijo izquierdo está cargado a la derecha */
+            /* Si el hijo izquierdo estÃ¡ cargado a la derecha */
             nodo->izquierdo = rotacionIzquierda(nodo->izquierdo);
             flag = 1; /*Continuar revisando factores */
         }
@@ -238,11 +238,11 @@ pnodo deleteR( pnodo nodo)
             flag = 1;/* Debe seguir revisando factores de balance */
         nodo = rotacionDerecha(nodo);
     }
-    else if (nodo->balance > 1)  /* Si quedó desbalaceado por la derecha */
+    else if (nodo->balance > 1)  /* Si quedÃ³ desbalaceado por la derecha */
     {
         if (nodo->derecho->balance < 0)
         {
-            /* Si hijo derecho está cargado a la izquierda */
+            /* Si hijo derecho estÃ¡ cargado a la izquierda */
             nodo->derecho = rotacionDerecha(nodo->derecho);
             flag = 1; //debe seguir revisando. Caso d.
         }
@@ -252,9 +252,9 @@ pnodo deleteR( pnodo nodo)
             flag = 1;/* Debe seguir revisando factores de balance. Caso e. */
         nodo = rotacionIzquierda(nodo);
     }
-    else if (nodo->balance == 0) /* Si estaba en +1 ó -1 y queda en cero */
+    else if (nodo->balance == 0) /* Si estaba en +1 Ã³ -1 y queda en cero */
         flag = 1; /* Debe seguir corrigiendo. Caso b.*/
-    else /* Si estaba en cero y queda en -1 ó +1 */
+    else /* Si estaba en cero y queda en -1 Ã³ +1 */
         flag = 0; /* No debe seguir rebalanceando. Caso a.*/
     return nodo;
 }
@@ -289,6 +289,36 @@ void salir(){
     printf("Programa finalizado");
 }
 
+void inorder(pnodo t, int profundidad)
+{
+    if (t != NULL)
+    {
+        inorder(t->izquierdo, profundidad+1);
+        printf ("v= %d p=%d bal=%d \n", t->clave, profundidad, t->balance);
+        inorder(t->derecho, profundidad+1);
+    }
+}
+
+
+void postorder(pnodo t, int profundidad)
+{
+    if (t != NULL)
+    {
+        postorder(t->izquierdo, profundidad+1);
+        postorder(t->derecho, profundidad+1);
+        printf ("v= %d p=%d bal=%d \n", t->clave, profundidad, t->balance);
+    }
+}
+
+void preorder(pnodo t, int profundidad)
+{
+if (t != NULL)
+{
+printf ("v= %d p=%d bal=%d \n", t->clave, profundidad, t->balance);
+preorder(t->izquierdo, profundidad+1);
+preorder(t->derecho, profundidad+1);
+}
+}
 
 
 void menu(){
