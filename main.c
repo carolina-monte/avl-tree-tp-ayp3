@@ -274,6 +274,16 @@ pnodo busqueda(pnodo nodo)
         return busqueda(nodo->derecho);
     return busqueda(nodo->izquierdo);
 }
+pnodo  BuscarAVL(int clave, pnodo nodo)
+{
+    key= clave;
+    pnodo resultado=busqueda(nodo);
+    if(resultado==NULL)
+        printf("\nNo encontrado\n");
+    else
+        printf("\nEncontrado\n");
+    return nodo;
+}
 
 void salir(){
     printf("Programa finalizado");
