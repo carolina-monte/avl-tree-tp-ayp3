@@ -267,7 +267,7 @@ pnodo deleteR( pnodo nodo)
 }
 pnodo DescartarAVL(int clave, pnodo nodo)
 {
-    key = clave;
+    key = clave; /*Valor que toma de referncia el metodo deleteR*/
     nodo = deleteR(nodo);
     if (flag == 1) alto_avl--;
     return nodo;
@@ -281,13 +281,19 @@ pnodo busqueda(pnodo nodo)
         return busqueda(nodo->derecho);
     return busqueda(nodo->izquierdo);
 }
+
+/*
+Recibe el dato a encontrar y en que nodo para
+usarlo de forma recursiva*/
 pnodo  BuscarAVL(int clave, pnodo nodo)
 {
     key= clave;
     pnodo resultado=busqueda(nodo);
+    /*Caso 1, no se encontró el elemento*/
     if(resultado==NULL)
         printf("\nNo encontrado\n");
     else
+    /*Caso 2 se encontró*/
         printf("\nEncontrado\n");
     return nodo;
 }
@@ -295,7 +301,7 @@ pnodo  BuscarAVL(int clave, pnodo nodo)
 void salir(){
     printf("Programa finalizado");
 }
-
+/*Imprime datos de forma recursiva*/
 void inorder(pnodo nodo, int profundidad)
 {
     if (nodo != NULL)
@@ -306,7 +312,7 @@ void inorder(pnodo nodo, int profundidad)
     }
 }
 
-
+/*Imprime datos de forma recursiva*/
 void postorder(pnodo nodo, int profundidad)
 {
     if (nodo != NULL)
@@ -316,7 +322,7 @@ void postorder(pnodo nodo, int profundidad)
         printf ("v= %d p=%d bal=%d \n", nodo->clave, profundidad, nodo->balance);
     }
 }
-
+/*Imprime datos de forma recursiva*/
 void preorder(pnodo nodo, int profundidad)
 {
     if (nodo != NULL)
