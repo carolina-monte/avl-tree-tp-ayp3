@@ -152,6 +152,114 @@ pnodo InsertarAVL(int clave, pnodo nodo)
     return nodo;
 }
 
+pnodo deleteR( pnodo nodo)
+{
+    pnodo p;
+    if (nodo == NULL)  /* No encontró nodo a descartar */
+    {
+        Error(0);
+        flag = 0;
+    }
+    else if (nodo->clave < key)
+    {
+        //Comienza el descenso por la derecha
+        nodo->derecho = deleteR(nodo->derecho);
+        //aquí se llega en el retorno ascendente.
+        nodo->balance -= flag; /* Se descartó por la derecha. Disminuye factor */
+        //Se retorna después de la revisión de los factores
+    }
+    else if (nodo->clave > key)
+    {
+        //Desciende por la izquierda
+        nodo->izquierdo = deleteR(nodo->izquierdo);
+        //o se llega por esta vía si se descartó por la izquierda.
+        nodo->balance += flag; /* se descartó por la izq. Aumenta factor de balance */
+    }
+    else   /* (t->clave == key) */
+    {
+        /* Encontró el nodo a descartar */
+        if (nodo->izquierdo == NULL)   /*Si hay hijo derecho debe ser hoja, por ser AVL */
+        {
+            p = nodo;
+            nodo = nodo->derecho;
+            free(p);
+            flag = 1; /* Debe seguir revisando factores de balance */
+            return nodo; /* ascendentemente */
+        }
+        else if (nodo->derecho == NULL)   /*Si hay hijo izquierdo debe ser hoja */
+        {
+            p = nodo;
+            nodo = nodo->izquierdo;
+            free(p);
+            flag = 1; /* Asciende revisando factores de balance */
+            return nodo; /* Corrigiendo */
+        }
+        else   /* Tiene dos hijos */
+        {
+            if (nodo->balance<0)
+            {
+                /* Si cargado a la izquierda, elimina mayor descendiente hijo izq */
+                p = nodo->izquierdo;
+                while (p->derecho != NULL) p = p->derecho;
+                nodo->clave = p->clave;
+                key = p->clave; //busca hoja a eliminar
+                nodo->izquierdo = deleteR(nodo->izquierdo);
+                nodo->balance += flag; /* incrementa factor de balance */
+            }
+            else   /* Si cargado a la derecha, elimina menor descendiente hijo der */
+            {
+                p = nodo->derecho;
+                while (p->izquierdo != NULL)
+                    p = p->izquierdo;
+                nodo->clave = p->clave;
+                key = p->clave;
+                nodo->derecho = deleteR(nodo->derecho);
+                nodo->balance -= flag; /* decrementa balance */
+            }
+        }
+    }
+
+    /* Mantiene árbol balanceado avl. Sólo una o dos rotaciones por descarte */
+    if (flag == 0 ) /* No hay que rebalancear. Sigue el ascenso, sin rebalancear */
+        return nodo;
+
+    /* Hay que revisar factores de balance en el ascenso*/
+    if (nodo->balance < -1)  /* Si quedó desbalanceado por la izquierda y dejó de ser AVL */
+    {
+        if (nodo->izquierdo->balance > 0)  /*espejos casos c, d y e */
+        {
+            /* Si el hijo izquierdo está cargado a la derecha */
+            nodo->izquierdo = rotacionIzquierda(nodo->izquierdo);
+            flag = 1; /*Continuar revisando factores */
+        }
+        else if (nodo->izquierdo->balance == 0)
+            flag = 0; /*No debe seguir el rebalance */
+        else
+            flag = 1;/* Debe seguir revisando factores de balance */
+        nodo = rotacionDerecha(nodo);
+    }
+    else if (nodo->balance > 1)  /* Si quedó desbalaceado por la derecha */
+    {
+        if (nodo->derecho->balance < 0)
+        {
+            /* Si hijo derecho está cargado a la izquierda */
+            nodo->derecho = rotacionDerecha(nodo->derecho);
+            flag = 1; //debe seguir revisando. Caso d.
+        }
+        else if (nodo->derecho->balance == 0)
+            flag = 0; /* No debe seguir el rebalance. Caso c. */
+        else //positivo
+            flag = 1;/* Debe seguir revisando factores de balance. Caso e. */
+        nodo = rotacionIzquierda(nodo);
+    }
+    else if (nodo->balance == 0) /* Si estaba en +1 ó -1 y queda en cero */
+        flag = 1; /* Debe seguir corrigiendo. Caso b.*/
+    else /* Si estaba en cero y queda en -1 ó +1 */
+        flag = 0; /* No debe seguir rebalanceando. Caso a.*/
+    return nodo;
+}
+
+
 void salir(){
     printf("Programa finalizado");
 }
