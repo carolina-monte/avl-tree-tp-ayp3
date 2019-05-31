@@ -16,6 +16,19 @@ int flag;
 int key;
 int alto_avl = 0;
 
+/* Rotación Izquierda (A) *
+*  A               B
+* / \             / \
+* a  B ==>       A   c
+*   / \         / \ / \
+*   b  c       a  b d  e
+      / \
+     d   e
+* Sólo cambian los factores de balance de los nodos A y B
+* Los factores de balance de los sub-árboles no cambian. */
+
+
+
 static pnodo rotacionIzquierda(pnodo nodo)
 {
     pnodo temp;
