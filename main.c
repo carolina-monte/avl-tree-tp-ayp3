@@ -266,6 +266,15 @@ pnodo DescartarAVL(int clave, pnodo t)
     return t;
 }
 
+pnodo busqueda(pnodo nodo)
+{
+    if (nodo==NULL || nodo->clave==key)
+        return nodo;
+    if(nodo->clave < key)
+        return busqueda(nodo->derecho);
+    return busqueda(nodo->izquierdo);
+}
+
 void salir(){
     printf("Programa finalizado");
 }
