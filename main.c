@@ -366,11 +366,18 @@ void menu(){
                 break;
 
             case 5:
-   //to do llamada a borrar
+                //to do llamada a borrar
+                printf("ingresar valor a borra \n");
+                scanf("%d", &valor);
+                t=DescartarAVL(valor , t);
+
                 break;
 
             case 6:
-   //to do llamada a buscar
+                //to do llamada a buscar
+                printf("ingresar valor a buscar \n");
+                scanf("%d", &valor);
+                t=BuscarAVL(valor , t);
                 break;
 
             case 7:
@@ -379,7 +386,7 @@ void menu(){
 
 
         }
-        
+
     }while (opcion != 7);
 
 
