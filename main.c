@@ -350,21 +350,27 @@ void menu(){
             case 1:
                 printf("ingresar un valor \n");
                 scanf("%d", &valor);
+                t=InsertarAVL(valor , t);
                 break;
 
             case 2:
+                inorder(t,0);
                 break;
 
             case 3:
+                postorder(t,0);
                 break;
 
             case 4:
+                preorder(t,0);
                 break;
 
             case 5:
+   //to do llamada a borrar
                 break;
 
             case 6:
+   //to do llamada a buscar
                 break;
 
             case 7:
@@ -373,7 +379,7 @@ void menu(){
 
 
         }
-
+        
     }while (opcion != 7);
 
 
