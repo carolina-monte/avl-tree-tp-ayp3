@@ -434,7 +434,8 @@ void menu(){
         printf("4. Listar Pre order \n");
         printf("5. Borrar Nodo \n");
         printf("6. Buscar Nodo \n");
-        printf("7. Salir \n");
+        printf("7. pasosPredeterminados \n");
+        printf("8. Salir \n");
 
         printf("SELECCIONA LA OPCION \n");
         scanf("%d", &opcion);
