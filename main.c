@@ -319,7 +319,102 @@ preorder(t->izquierdo, profundidad+1);
 preorder(t->derecho, profundidad+1);
 }
 }
+void pasosPredeterminados()
+{
+    pnodo nodo=NULL;
 
+    printf("Inserto 4:\n");
+    nodo=InsertarAVL(4, nodo);
+    inorder(nodo, 0);
+    printf("******\n");
+
+/*    4(0)     */
+
+    printf("Inserto 3:\n");
+    nodo=InsertarAVL(3, nodo);
+    inorder(nodo, 0);
+    printf("******\n");
+
+/*         4 (-1)
+         /
+    (0) 3   */
+
+
+    printf("Inserto 5:\n");
+    nodo=InsertarAVL(5, nodo);
+    inorder(nodo, 0);
+    printf("******\n");
+/*
+          4 (0)
+        /   \
+    (0)3     5(0)*/
+
+    printf("Inserto 2:\n");
+    nodo=InsertarAVL(2, nodo);
+    inorder(nodo, 0);
+    printf("******\n");
+/*
+        4 (-1)
+       /   \
+   (-1)3     5(0)
+     /
+ (0)2
+*/
+
+    printf("Inserto 7:\n");
+    nodo=InsertarAVL(7, nodo);
+    inorder(nodo, 0);
+    printf("******\n");
+/*
+         4 (0)
+       /   \
+  (-1)3     5(1)
+    /         \
+ (0)2          7(0)
+*/
+    printf("Inserto 1:\n");
+    nodo=InsertarAVL(1, nodo);
+    inorder(nodo, 0);
+    printf("******\n");
+/*  Rotacion derecha
+         4 (0)
+       /    \
+   (0)2      5(1)
+    /  \        \
+ (0)1   3(0)     7(0)
+*/
+    printf("Descarto 1:\n");
+    nodo=DescartarAVL(1, nodo);
+    inorder(nodo, 0);
+    printf("******\n");
+/*
+        4 (0)
+       /    \
+   (1)2      5(1)
+       \        \
+       3(0)     7(0)
+
+        */
+    printf("Inserto 9:\n");
+    nodo=InsertarAVL(9, nodo);
+    inorder(nodo, 0);
+    printf("******\n");
+
+/* Rotacion izquierda
+         4 (0)
+       /    \
+   (1)2      7(0)
+       \     /  \
+       3(0) 5(0) 7(0)
+       */
+    printf("Buscar 7:\n");
+    BuscarAVL(7,nodo);
+    printf("******\n");
+
+    printf("Buscar 10:\n");
+    BuscarAVL(10,nodo);
+    printf("******\n");
+}
 
 void menu(){
 
@@ -379,15 +474,16 @@ void menu(){
                 scanf("%d", &valor);
                 t=BuscarAVL(valor , t);
                 break;
-
             case 7:
+                pasosPredeterminados();
+            case 8:
                 salir();
                 break;
 
 
         }
 
-    }while (opcion != 7);
+    }while (opcion != 8);
 
 
 }
