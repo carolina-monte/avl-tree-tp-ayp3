@@ -258,7 +258,13 @@ pnodo deleteR( pnodo nodo)
         flag = 0; /* No debe seguir rebalanceando. Caso a.*/
     return nodo;
 }
-
+pnodo DescartarAVL(int clave, pnodo t)
+{
+    key = clave;
+    t = deleteR(t);
+    if (flag == 1) alto_avl--;
+    return t;
+}
 
 void salir(){
     printf("Programa finalizado");
